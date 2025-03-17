@@ -2,7 +2,7 @@
 
 namespace Num2WordsNet
 {
-    public class Num2WordsNet
+    public class Num2Words
     {
         // 存储不同语言的转换器实例
         private static readonly Dictionary<string, Num2Word_Base> CONVERTER_CLASSES = new Dictionary<string, Num2Word_Base>
