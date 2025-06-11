@@ -93,7 +93,7 @@ namespace Num2WordsNet
         }
 
         // 生成高数字单词
-        private List<string> GenHighNumwords(string[] units, string[] tens, string[] lows)
+        public List<string> GenHighNumwords(string[] units, string[] tens, string[] lows)
         {
             var outList = new List<string>();
             foreach (var t in tens)
