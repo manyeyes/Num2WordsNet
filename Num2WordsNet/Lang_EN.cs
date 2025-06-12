@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,18 +9,25 @@ namespace Num2WordsNet
 {
     public class Lang_EN : Lang_EU
     {
-        protected Dictionary<long, string> cards = new Dictionary<long, string>();
-        protected string negword = "minus ";
-        protected string pointword = "point";
-        protected List<string> exclude_title = new List<string> { "and", "point", "minus" };
-        protected List<(long, string)> mid_numwords = new List<(long, string)>
+        public List<Tuple<int, string>> mid_numwords = new List<Tuple<int, string>>();
+        public string[] low_numwords;
+        public Dictionary<string, string> ords = new Dictionary<string, string>();
+
+        public override void Setup()
         {
-            (1000, "thousand"), (100, "hundred"),
-            (90, "ninety"), (80, "eighty"), (70, "seventy"),
-            (60, "sixty"), (50, "fifty"), (40, "forty"),
-            (30, "thirty"),(20,"twenty")
+            base.Setup();
+
+            negword = "minus ";
+            pointword = "point";
+            exclude_title = new List<string> { "and", "point", "minus" };
+            mid_numwords = new List<Tuple<int, string>>
+        {
+            Tuple.Create(1000, "thousand"), Tuple.Create(100, "hundred"),
+            Tuple.Create(90, "ninety"), Tuple.Create(80, "eighty"), Tuple.Create(70, "seventy"),
+            Tuple.Create(60, "sixty"), Tuple.Create(50, "fifty"), Tuple.Create(40, "forty"),
+            Tuple.Create(30, "thirty"),Tuple.Create(20, "twenty")
         };
-        protected List<string> low_numwords = new List<string>
+            low_numwords = new string[]
         {
              "twenty","nineteen", "eighteen", "seventeen",
             "sixteen", "fifteen", "fourteen", "thirteen",
@@ -27,7 +35,7 @@ namespace Num2WordsNet
             "seven", "six", "five", "four", "three", "two",
             "one", "zero"
         };
-        protected Dictionary<string, string> ords = new Dictionary<string, string>
+            ords = new Dictionary<string, string>
         {
             {"one", "first"},
             {"two", "second"},
@@ -42,18 +50,22 @@ namespace Num2WordsNet
             {"eleven", "eleventh"},
             {"twelve", "twelfth"}
         };
+        }
 
-        public void SetHighNumwords(List<string> high)
+        public override void SetHighNumwords(string[] high)
         {
-            long max = 3 + 3 * high.Count;
-            for (int i = 0; i < high.Count; i++)
+            long max = 3 + 3 * high.Length;
+            for (int i = 0; i < high.Length; i++)
             {
-                long n = max - 3 * (i + 1);
-                cards[(long)Math.Pow(10, n)] = high[i] + "illion";
+                long n = max - 3 * (i);
+                if (n > 3)
+                {
+                    cards[(double)Math.Pow(10, n)] = high[i] + "illion";
+                }
             }
         }
 
-        public (string, decimal) Merge((string, decimal) lpair, (string, decimal) rpair)
+        public override (string, decimal) Merge((string, decimal) lpair, (string, decimal) rpair)
         {
             string ltext = lpair.Item1;
             decimal lnum = lpair.Item2;
@@ -78,77 +90,6 @@ namespace Num2WordsNet
             }
             return ($"{ltext}, {rtext}", lnum + rnum);
         }
-
-        protected string Title(string word)
-        {
-            if (string.IsNullOrEmpty(word))
-            {
-                return word;
-            }
-            return char.ToUpper(word[0]) + word.Substring(1);
-        }
-
-        public string ToCardinal(decimal value)
-        {
-            if (value < 0)
-            {
-                return negword + ToCardinal(-value);
-            }
-            if (value < 21)
-            {
-                return low_numwords[20 - (int)value];
-            }
-            if (value < 100)
-            {
-                decimal tens = (int)(value / 10) * 10;
-                decimal units = value % 10;
-                if (units == 0)
-                {
-                    return mid_numwords.First(x => x.Item1 == tens).Item2;
-                }
-                return $"{mid_numwords.First(x => x.Item1 == tens).Item2}-{low_numwords[20 - (int)units]}";
-            }
-            foreach (var (num, word) in mid_numwords)
-            {
-                if (value >= num)
-                {
-                    decimal quotient = value / num;
-                    decimal remainder = value % num;
-                    if (remainder == 0)
-                    {
-                        if (num == 100 || num == 1000)
-                        {
-                            return $"{ToCardinal(quotient)} {word}";
-                        }
-                        return word;
-                    }
-                    return Merge((ToCardinal(quotient) + " " + word, quotient * num), (ToCardinal(remainder), remainder)).Item1;
-                }
-            }
-            foreach (var num in cards.Keys.OrderByDescending(x => x))
-            {
-                if (value >= num)
-                {
-                    decimal quotient = value / num;
-                    decimal remainder = value % num;
-                    if (remainder == 0)
-                    {
-                        return $"{ToCardinal(quotient)} {cards[num]}";
-                    }
-                    return Merge((ToCardinal(quotient) + " " + cards[num], quotient * num), (ToCardinal(remainder), remainder)).Item1;
-                }
-            }
-            return "";
-        }
-
-        public void VerifyOrdinal(long value)
-        {
-            if (value < 0)
-            {
-                throw new ArgumentException("Ordinal values must be non-negative.");
-            }
-        }
-
         public override string ToOrdinal(decimal value)
         {
             VerifyOrdinal(value);
@@ -172,7 +113,7 @@ namespace Num2WordsNet
             return string.Join(" ", outwords);
         }
 
-        public string ToOrdinalNum(long value)
+        public override string ToOrdinalNum(decimal value)
         {
             VerifyOrdinal(value);
             return $"{value}{ToOrdinal(value).Substring(ToOrdinal(value).Length - 2)}";

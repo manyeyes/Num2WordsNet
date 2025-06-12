@@ -9,9 +9,9 @@ namespace Num2WordsNet
 {
     public class Lang_AM : Lang_EU
     {
-        List<Tuple<int, string>> mid_numwords = new List<Tuple<int, string>>();
-        List<string> low_numwords = new List<string>();
-        Dictionary<string, string> ords = new Dictionary<string, string>();
+        public List<Tuple<int, string>> mid_numwords = new List<Tuple<int, string>>();
+        public string[] low_numwords = new string[] { };
+        public Dictionary<string, string> ords = new Dictionary<string, string>();
         // 定义货币形式
         public new Dictionary<string, Tuple<string[], string[]>> CURRENCY_FORMS = new Dictionary<string, Tuple<string[], string[]>>
         {
@@ -23,22 +23,20 @@ namespace Num2WordsNet
         public new string MEGA_SUFFIX = "ሚሊዮን";
 
         // 设置高数字单词
-        public override void SetHighNumwords()
+        public override void SetHighNumwords(string[] high)
         {
-            var high = new List<string>();
-            // 这里需要根据实际情况填充 high 列表
-            var cap = 3 * (high.Count + 1);
+            var cap = 3 * (high.Length + 1);
 
-            for (int i = 0; i < high.Count; i++)
+            for (int i = 0; i < high.Length; i++)
             {
                 int n = cap - 3 * i;
                 if (n == 9)
                 {
-                    cards[(decimal)Math.Pow(10, n)] = high[i] + GIGA_SUFFIX;
+                    cards[(double)Math.Pow(10, n)] = high[i] + GIGA_SUFFIX;
                 }
                 else
                 {
-                    cards[(decimal)Math.Pow(10, n)] = high[i] + MEGA_SUFFIX;
+                    cards[(double)Math.Pow(10, n)] = high[i] + MEGA_SUFFIX;
                 }
             }
         }
@@ -65,7 +63,7 @@ namespace Num2WordsNet
                 Tuple.Create(30, "ሠላሳ")
             };
 
-            low_numwords = new List<string>
+            low_numwords = new string[]
             {
                 "ሃያ", "አሥራ ዘጠኝ", "አሥራ ስምንት", "አሥራ ሰባት",
                 "አስራ ስድስት", "አሥራ አምስት", "አሥራ አራት", "አሥራ ሦስት",
@@ -114,7 +112,7 @@ namespace Num2WordsNet
             }
 
             string output = "";
-            if (value >= MAXVAL)
+            if ((double)value >= MAXVAL)
             {
                 throw new OverflowException(string.Format(errmsg_toobig, value, MAXVAL));
             }
@@ -132,7 +130,7 @@ namespace Num2WordsNet
         }
 
         // 合并数字和单词
-        public override (string, int) Merge((string, int) lpair, (string, int) rpair)
+        public override (string, decimal) Merge((string, decimal) lpair, (string, decimal) rpair)
         {
             var (ltext, lnum) = lpair;
             var (rtext, rnum) = rpair;
@@ -181,10 +179,10 @@ namespace Num2WordsNet
         }
 
         // 转换为带序数词后缀的数字
-        public override decimal ToOrdinalNum(decimal value)
+        public override string ToOrdinalNum(decimal value)
         {
             VerifyOrdinal(value);
-            return decimal.Parse($"{value}{ToOrdinal(value).Substring(ToOrdinal(value).Length - 1)}");
+            return $"{value}{ToOrdinal(value).Substring(ToOrdinal(value).Length - 1)}";
         }
 
         // 转换为货币表示

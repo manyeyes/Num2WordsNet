@@ -1,4 +1,4 @@
-﻿using Num2WordsNet;
+﻿using System.Reflection;
 
 namespace Num2WordsNet
 {
@@ -101,19 +101,19 @@ namespace Num2WordsNet
             {
                 throw new NotImplementedException($"Conversion type {to} is not implemented.");
             }
-
             var methodName = $"To{char.ToUpper(to[0]) + to.Substring(1)}";
-            var method = converter.GetType().GetMethod(methodName);
+            //Type[] parameterTypes = new Type[] { typeof(decimal), typeof(string) };
+            //var method = converter.GetType().GetMethod(methodName, parameterTypes);
+            MethodInfo[] methods = converter.GetType().GetMethods().Where(m => m.Name == methodName).ToArray();
+            MethodInfo method = methods.OrderByDescending(m => m.GetParameters().Length).FirstOrDefault();
             if (method == null)
             {
                 throw new NotImplementedException($"Method {methodName} is not implemented in the converter.");
             }
-
             var parameters = new List<object> { Convert.ToDecimal(number) };
-            if (method.GetParameters().Length == 3)
+            foreach(var p in method.GetParameters().Skip(1))
             {
-                parameters.Add(true);
-                parameters.Add(null);
+                parameters.Add(p.DefaultValue);
             }
             if (kwargs != null)
             {

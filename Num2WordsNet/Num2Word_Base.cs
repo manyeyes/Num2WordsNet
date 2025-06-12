@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Num2WordsNet
+﻿namespace Num2WordsNet
 {
     public abstract class Num2Word_Base
     {
@@ -36,9 +27,9 @@ namespace Num2WordsNet
         public string errmsg_toobig = "abs({0}) must be less than {1}.";
 
         // 有序字典存储数字和对应的单词
-        public OrderedDictionary cards = new OrderedDictionary();
+        public Dictionary<double, string> cards = new Dictionary<double, string>();
         // 最大支持的数值
-        public decimal MAXVAL;
+        public double MAXVAL;
 
         public Num2Word_Base()
         {
@@ -48,35 +39,36 @@ namespace Num2WordsNet
             if (GetType().GetFields().Any(field => new[] { "high_numwords", "mid_numwords", "low_numwords" }.Contains(field.Name)))
             {
                 SetNumwords();
-                MAXVAL = 1000 * (decimal)cards.Cast<DictionaryEntry>().First().Key;
+                MAXVAL = 1000 * (double)cards.First().Key;
             }
         }
 
         public void SetNumwords()
         {
-            SetHighNumwords();
-            SetMidNumwords();
-            SetLowNumwords();
+            var high = (string[]?)GetType().GetField("high_numwords").GetValue(this) ?? null;
+            var mid = (List<Tuple<int, string>>?)GetType().GetField("mid_numwords").GetValue(this) ?? null;
+            var low = (string[])GetType().GetField("low_numwords").GetValue(this);
+            SetHighNumwords(high);
+            SetMidNumwords(mid);
+            SetLowNumwords(low);
         }
 
         // 设置高数字单词，抽象方法，由子类实现
-        public virtual void SetHighNumwords()
+        public virtual void SetHighNumwords(string[] high)
         {
             throw new NotImplementedException();
         }
 
-        public void SetMidNumwords()
-        {
-            var mid = (List<Tuple<int, string>>)GetType().GetField("mid_numwords").GetValue(this);
+        public virtual void SetMidNumwords(List<Tuple<int, string>>  mid)
+        {            
             foreach (var item in mid)
             {
                 cards[item.Item1] = item.Item2;
             }
         }
 
-        public void SetLowNumwords()
-        {
-            var numwords = (string[])GetType().GetField("low_numwords").GetValue(this);
+        public virtual void SetLowNumwords(string[] numwords)
+        {            
             for (int i = 0; i < numwords.Length; i++)
             {
                 cards[numwords.Length - 1 - i] = numwords[i];
@@ -85,46 +77,58 @@ namespace Num2WordsNet
 
         public List<object> Splitnum(decimal value)
         {
-            foreach (DictionaryEntry entry in cards)
+            foreach (var entry in cards)
             {
-                if ((decimal)entry.Key > value)
+                if (entry.Key > (double)value)
                 {
                     continue;
                 }
 
                 var outList = new List<object>();
+                decimal div = 0;
+                decimal mod = 0;
                 if (value == 0)
                 {
-                    var div = 1;
-                    var mod = 0;
+                    div = 1;
+                    mod = 0;
                 }
                 else
                 {
-                    var div = Math.Floor(value / (decimal)entry.Key);
-                    var mod = value % (decimal)entry.Key;
+                    div = Math.Floor(value / (decimal)entry.Key);
+                    mod = value % (decimal)entry.Key;
+                }
 
-                    if (div == 1)
-                    {
-                        outList.Add(Tuple.Create(cards[1].ToString(), 1));
-                    }
-                    else
-                    {
-                        if (div == value)
-                        {
-                            return new List<object> { Tuple.Create(div * ((decimal?)entry.Value??0), (int)(div * (decimal)entry.Key)) };
-                        }
-                        outList.Add(Splitnum(div));
-                    }
-
-                    outList.Add(Tuple.Create(entry.Value.ToString(), (int)(decimal)entry.Key));
-
+                if (div == 1)
+                {
                     if (mod > 0)
                     {
-                        outList.Add(Splitnum(mod));
+                        outList.Add(Tuple.Create(cards[1].ToString(), (decimal)1));
                     }
-
-                    return outList;
                 }
+                else
+                {
+                    if (div == value)
+                    {
+                        return new List<object> { Tuple.Create(div * (decimal)entry.Key, (div * (decimal)entry.Key)) };
+                    }
+                    var c = Clean(Splitnum(div));
+                    var cTuple = Tuple.Create(c.Item1, c.Item2);
+                    outList.Add(cTuple);
+                    //outList.AddRange(Splitnum(div));
+                }
+
+                outList.Add(Tuple.Create(entry.Value.ToString(), (decimal)entry.Key));
+
+                if (mod > 0)
+                {
+                    var c = Clean(Splitnum(mod));
+                    var cTuple = Tuple.Create(c.Item1,  c.Item2);
+                    outList.Add(cTuple);
+                    //outList.AddRange(Splitnum(mod));
+                }
+
+                return outList;
+
             }
             return null;
         }
@@ -164,7 +168,7 @@ namespace Num2WordsNet
                 outStr = negword.Trim() + " ";
             }
 
-            if (value >= MAXVAL)
+            if ((double)value >= MAXVAL)
             {
                 throw new OverflowException(string.Format(errmsg_toobig, value, MAXVAL));
             }
@@ -228,22 +232,23 @@ namespace Num2WordsNet
         }
 
         // 合并数字单词，虚方法，子类覆盖
-        public virtual (string, int) Merge((string, int) curr, (string, int) next)
+        public virtual (string, decimal) Merge((string, decimal) curr, (string, decimal) next)
         {
             throw new NotImplementedException();
         }
 
-        public (string, int) Clean(List<object> val)
+        public (string, decimal) Clean(List<object> val)
         {
             var outList = val;
             while (val.Count != 1)
             {
                 outList = new List<object>();
-                var left = (Tuple<string, int>)val[0];
-                var right = (Tuple<string, int>)val[1];
+                var left = (Tuple<string, decimal>)val[0];
+                var right = (Tuple<string, decimal>)val[1];
                 if (left != null && right != null)
                 {
-                    outList.Add(Merge((left.Item1, left.Item2), (right.Item1, right.Item2)));
+                    var xxx = Merge((left.Item1, left.Item2), (right.Item1, right.Item2));
+                    outList.Add(Tuple.Create(xxx.Item1, xxx.Item2));
                     if (val.Count > 2)
                     {
                         outList.AddRange(val.Skip(2));
@@ -272,7 +277,7 @@ namespace Num2WordsNet
                 }
                 val = outList;
             }
-            var result = (Tuple<string, int>)val[0];
+            var result = (Tuple<string, decimal>)val[0];
             return (result.Item1, result.Item2);
         }
 
@@ -315,9 +320,9 @@ namespace Num2WordsNet
             return ToCardinal(value);
         }
 
-        public virtual decimal ToOrdinalNum(decimal value)
+        public virtual string ToOrdinalNum(decimal value)
         {
-            return value;
+            return value.ToString();
         }
 
         public string Inflect(decimal value, string text)
