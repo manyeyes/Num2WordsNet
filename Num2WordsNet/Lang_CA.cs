@@ -9,8 +9,8 @@ namespace Num2WordsNet
     public class Lang_CA : Lang_EU
     {
         // 定义通用的美元和分的形式
-        private static readonly Tuple<string, string> GENERIC_DOLLARS = Tuple.Create("dòlar", "dòlars");
-        private static readonly Tuple<string, string> GENERIC_CENTS = Tuple.Create("centau", "centaus");
+        private static readonly string[] GENERIC_DOLLARS = new string[] { "dòlar", "dòlars" };
+        private static readonly string[] GENERIC_CENTS = new string[] { "centau", "centaus" };
         public static readonly string[] CURRENCIES_UNA = new string[]
         {
             "SLL", "SEK", "NOK", "CZK", "DKK", "ISK", "SKK", "GBP", "CYP", "EGP",
@@ -28,26 +28,26 @@ namespace Num2WordsNet
         {
             { "EUR", Tuple.Create(new[] { "euro", "euros" }, new[] { "cèntim", "cèntims" }) },
             { "ESP", Tuple.Create(new[] { "pesseta", "pessetes" }, new[] { "cèntim", "cèntims" }) },
-            { "USD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), new[] { "centau", "centaus" }) },
+            { "USD", Tuple.Create(GENERIC_DOLLARS, new[] { "centau", "centaus" }) },
             { "PEN", Tuple.Create(new[] { "sol", "sols" }, new[] { "cèntim", "cèntims" }) },
-            { "CRC", Tuple.Create(new[] { "colón", "colons" }, GENERIC_CENTS.ToTupleArray()) },
-            { "AUD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), GENERIC_CENTS.ToTupleArray()) },
-            { "CAD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), GENERIC_CENTS.ToTupleArray()) },
+            { "CRC", Tuple.Create(new[] { "colón", "colons" }, GENERIC_CENTS) },
+            { "AUD", Tuple.Create(GENERIC_DOLLARS, GENERIC_CENTS) },
+            { "CAD", Tuple.Create(GENERIC_DOLLARS, GENERIC_CENTS) },
             { "GBP", Tuple.Create(new[] { "lliura", "lliures" }, new[] { "penic", "penics" }) },
             { "RUB", Tuple.Create(new[] { "ruble", "rubles" }, new[] { "copec", "copecs" }) },
             { "SEK", Tuple.Create(new[] { "corona", "corones" }, new[] { "öre", "öre" }) },
             { "NOK", Tuple.Create(new[] { "corona", "corones" }, new[] { "øre", "øre" }) },
             { "PLN", Tuple.Create(new[] { "zloty", "zlotys" }, new[] { "grosz", "groszy" }) },
-            { "MXN", Tuple.Create(new[] { "peso", "pesos" }, GENERIC_CENTS.ToTupleArray()) },
+            { "MXN", Tuple.Create(new[] { "peso", "pesos" }, GENERIC_CENTS) },
             { "RON", Tuple.Create(new[] { "leu", "lei" }, new[] { "ban", "bani" }) },
             { "INR", Tuple.Create(new[] { "rupia", "rupies" }, new[] { "paisa", "paise" }) },
             { "HUF", Tuple.Create(new[] { "fòrint", "fòrints" }, new[] { "fillér", "fillérs" }) },
             { "FRF", Tuple.Create(new[] { "franc", "francs" }, new[] { "cèntim", "cèntims" }) },
             { "CNY", Tuple.Create(new[] { "iuan", "iuans" }, new[] { "fen", "jiao" }) },
             { "CZK", Tuple.Create(new[] { "corona", "corones" }, new[] { "haléř", "haléřů" }) },
-            { "NIO", Tuple.Create(new[] { "córdoba", "córdobas" }, GENERIC_CENTS.ToTupleArray()) },
+            { "NIO", Tuple.Create(new[] { "córdoba", "córdobas" }, GENERIC_CENTS) },
             { "VES", Tuple.Create(new[] { "bolívar", "bolívars" }, new[] { "cèntim", "cèntims" }) },
-            { "BRL", Tuple.Create(new[] { "real", "reals" }, GENERIC_CENTS.ToTupleArray()) },
+            { "BRL", Tuple.Create(new[] { "real", "reals" }, GENERIC_CENTS) },
             { "CHF", Tuple.Create(new[] { "franc", "francs" }, new[] { "cèntim", "cèntims" }) },
             { "JPY", Tuple.Create(new[] { "ien", "iens" }, new[] { "sen", "sen" }) },
             { "KRW", Tuple.Create(new[] { "won", "wons" }, new[] { "jeon", "jeon" }) },
@@ -63,48 +63,48 @@ namespace Num2WordsNet
             { "AMD", Tuple.Create(new[] { "dram", "drams" }, new[] { "luma", "lumas" }) },
             { "ANG", Tuple.Create(new[] { "florí", "florins" }, new[] { "cèntim", "cèntims" }) },
             { "AOA", Tuple.Create(new[] { "kwanza", "kwanzes" }, new[] { "cèntim", "cèntims" }) },
-            { "ARS", Tuple.Create(new[] { "peso", "pesos" }, GENERIC_CENTS.ToTupleArray()) },
-            { "AWG", Tuple.Create(new[] { "florí", "florins" }, GENERIC_CENTS.ToTupleArray()) },
+            { "ARS", Tuple.Create(new[] { "peso", "pesos" }, GENERIC_CENTS) },
+            { "AWG", Tuple.Create(new[] { "florí", "florins" }, GENERIC_CENTS) },
             { "AZN", Tuple.Create(new[] { "manat", "manats" }, new[] { "qəpik", "qəpik" }) },
-            { "BBD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), GENERIC_CENTS.ToTupleArray()) },
+            { "BBD", Tuple.Create(GENERIC_DOLLARS, GENERIC_CENTS) },
             { "BDT", Tuple.Create(new[] { "taka", "taka" }, new[] { "poisha", "poisha" }) },
             { "BGN", Tuple.Create(new[] { "lev", "leva" }, new[] { "stotinka", "stotinki" }) },
             { "BHD", Tuple.Create(new[] { "dinar", "dinars" }, new[] { "fils", "fulūs" }) },
             { "BIF", Tuple.Create(new[] { "franc", "francs" }, new[] { "cèntim", "cèntims" }) },
-            { "BMD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), GENERIC_CENTS.ToTupleArray()) },
-            { "BND", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), GENERIC_CENTS.ToTupleArray()) },
-            { "BOB", Tuple.Create(new[] { "boliviano", "bolivianos" }, GENERIC_CENTS.ToTupleArray()) },
-            { "BSD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), GENERIC_CENTS.ToTupleArray()) },
+            { "BMD", Tuple.Create(GENERIC_DOLLARS, GENERIC_CENTS) },
+            { "BND", Tuple.Create(GENERIC_DOLLARS, GENERIC_CENTS) },
+            { "BOB", Tuple.Create(new[] { "boliviano", "bolivianos" }, GENERIC_CENTS) },
+            { "BSD", Tuple.Create(GENERIC_DOLLARS, GENERIC_CENTS) },
             { "BTN", Tuple.Create(new[] { "ngultrum", "ngultrums" }, new[] { "chetrum", "chetrums" }) },
             { "BWP", Tuple.Create(new[] { "pula", "pula" }, new[] { "thebe", "thebe" }) },
             { "BYN", Tuple.Create(new[] { "ruble", "rubles" }, new[] { "copec", "copecs" }) },
             { "BYR", Tuple.Create(new[] { "ruble", "rubles" }, new[] { "copec", "copecs" }) },
-            { "BZD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), new[] { "cèntim", "cèntims" }) },
+            { "BZD", Tuple.Create(GENERIC_DOLLARS, new[] { "cèntim", "cèntims" }) },
             { "CDF", Tuple.Create(new[] { "franc", "francs" }, new[] { "cèntim", "cèntims" }) },
-            { "CLP", Tuple.Create(new[] { "peso", "pesos" }, GENERIC_CENTS.ToTupleArray()) },
-            { "COP", Tuple.Create(new[] { "peso", "pesos" }, GENERIC_CENTS.ToTupleArray()) },
-            { "CUP", Tuple.Create(new[] { "peso", "pesos" }, GENERIC_CENTS.ToTupleArray()) },
-            { "CVE", Tuple.Create(new[] { "escut", "escuts" }, GENERIC_CENTS.ToTupleArray()) },
+            { "CLP", Tuple.Create(new[] { "peso", "pesos" }, GENERIC_CENTS) },
+            { "COP", Tuple.Create(new[] { "peso", "pesos" }, GENERIC_CENTS) },
+            { "CUP", Tuple.Create(new[] { "peso", "pesos" }, GENERIC_CENTS) },
+            { "CVE", Tuple.Create(new[] { "escut", "escuts" }, GENERIC_CENTS) },
             { "CYP", Tuple.Create(new[] { "lliura", "lliures" }, new[] { "cèntim", "cèntims" }) },
             { "DJF", Tuple.Create(new[] { "franc", "francs" }, new[] { "cèntim", "cèntims" }) },
             { "DKK", Tuple.Create(new[] { "corona", "corones" }, new[] { "øre", "øre" }) },
-            { "DOP", Tuple.Create(new[] { "peso", "pesos" }, GENERIC_CENTS.ToTupleArray()) },
+            { "DOP", Tuple.Create(new[] { "peso", "pesos" }, GENERIC_CENTS) },
             { "DZD", Tuple.Create(new[] { "dinar", "dinars" }, new[] { "cèntim", "cèntims" }) },
-            { "ECS", Tuple.Create(new[] { "sucre", "sucres" }, GENERIC_CENTS.ToTupleArray()) },
+            { "ECS", Tuple.Create(new[] { "sucre", "sucres" }, GENERIC_CENTS) },
             { "EGP", Tuple.Create(new[] { "lliura", "lliures" }, new[] { "piastre", "piastres" }) },
             { "ERN", Tuple.Create(new[] { "nakfa", "nakfes" }, new[] { "cèntim", "cèntims" }) },
             { "ETB", Tuple.Create(new[] { "birr", "birr" }, new[] { "cèntim", "cèntims" }) },
-            { "FJD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), GENERIC_CENTS.ToTupleArray()) },
+            { "FJD", Tuple.Create(GENERIC_DOLLARS, GENERIC_CENTS) },
             { "FKP", Tuple.Create(new[] { "lliura", "lliures" }, new[] { "penic", "penics" }) },
             { "GEL", Tuple.Create(new[] { "lari", "laris" }, new[] { "tetri", "tetri" }) },
             { "GHS", Tuple.Create(new[] { "cedi", "cedis" }, new[] { "pesewa", "pesewas" }) },
             { "GIP", Tuple.Create(new[] { "lliura", "lliures" }, new[] { "penic", "penics" }) },
             { "GMD", Tuple.Create(new[] { "dalasi", "dalasis" }, new[] { "butut", "bututs" }) },
             { "GNF", Tuple.Create(new[] { "franc", "francs" }, new[] { "cèntim", "cèntims" }) },
-            { "GTQ", Tuple.Create(new[] { "quetzal", "quetzals" }, GENERIC_CENTS.ToTupleArray()) },
-            { "GYD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), GENERIC_CENTS.ToTupleArray()) },
-            { "HKD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), GENERIC_CENTS.ToTupleArray()) },
-            { "HNL", Tuple.Create(new[] { "lempira", "lempires" }, GENERIC_CENTS.ToTupleArray()) },
+            { "GTQ", Tuple.Create(new[] { "quetzal", "quetzals" }, GENERIC_CENTS) },
+            { "GYD", Tuple.Create(GENERIC_DOLLARS, GENERIC_CENTS) },
+            { "HKD", Tuple.Create(GENERIC_DOLLARS, GENERIC_CENTS) },
+            { "HNL", Tuple.Create(new[] { "lempira", "lempires" }, GENERIC_CENTS) },
             { "HRK", Tuple.Create(new[] { "kuna", "kuna" }, new[] { "lipa", "lipa" }) },
             { "HTG", Tuple.Create(new[] { "gourde", "gourdes" }, new[] { "cèntim", "cèntims" }) },
             { "IDR", Tuple.Create(new[] { "rúpia", "rúpies" }, new[] { "cèntim", "cèntims" }) },
@@ -113,18 +113,18 @@ namespace Num2WordsNet
             { "IRR", Tuple.Create(new[] { "rial", "rials" }, new[] { "dinar", "dinars" }) },
             { "ISK", Tuple.Create(new[] { "corona", "corones" }, new[] { "eyrir", "aurar" }) },
             { "ITL", Tuple.Create(new[] { "lira", "lires" }, new[] { "cèntim", "cèntims" }) },
-            { "JMD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), new[] { "cèntim", "cèntims" }) },
+            { "JMD", Tuple.Create(GENERIC_DOLLARS, new[] { "cèntim", "cèntims" }) },
             { "JOD", Tuple.Create(new[] { "dinar", "dinars" }, new[] { "piastra", "piastres" }) },
             { "KES", Tuple.Create(new[] { "xiling", "xílings" }, new[] { "cèntim", "cèntims" }) },
             { "KGS", Tuple.Create(new[] { "som", "som" }, new[] { "tyiyn", "tyiyn" }) },
             { "KHR", Tuple.Create(new[] { "riel", "riels" }, new[] { "cèntim", "cèntims" }) },
             { "KMF", Tuple.Create(new[] { "franc", "francs" }, new[] { "cèntim", "cèntims" }) },
             { "KWD", Tuple.Create(new[] { "dinar", "dinars" }, new[] { "fils", "fils" }) },
-            { "KYD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), new[] { "cèntim", "cèntims" }) },
+            { "KYD", Tuple.Create(GENERIC_DOLLARS, new[] { "cèntim", "cèntims" }) },
             { "LAK", Tuple.Create(new[] { "kip", "kips" }, new[] { "at", "at" }) },
             { "LBP", Tuple.Create(new[] { "lliura", "lliures" }, new[] { "piastra", "piastres" }) },
             { "LKR", Tuple.Create(new[] { "rúpia", "rúpies" }, new[] { "cèntim", "cèntims" }) },
-            { "LRD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), new[] { "cèntim", "cèntims" }) },
+            { "LRD", Tuple.Create(GENERIC_DOLLARS, new[] { "cèntim", "cèntims" }) },
             { "LSL", Tuple.Create(new[] { "loti", "maloti" }, new[] { "sente", "lisente" }) },
             { "LTL", Tuple.Create(new[] { "lita", "litai" }, new[] { "cèntim", "cèntims" }) },
             { "LYD", Tuple.Create(new[] { "dinar", "dinars" }, new[] { "dírham", "dírhams" }) },
@@ -141,41 +141,41 @@ namespace Num2WordsNet
             { "MVR", Tuple.Create(new[] { "rufiyaa", "rufiyaa" }, new[] { "laari", "laari" }) },
             { "MWK", Tuple.Create(new[] { "kwacha", "kwacha" }, new[] { "tambala", "tambala" }) },
             { "MYR", Tuple.Create(new[] { "ringgit", "ringgits" }, new[] { "sen", "sens" }) },
-            { "MZN", Tuple.Create(new[] { "metical", "meticals" }, GENERIC_CENTS.ToTupleArray()) },
-            { "NAD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), new[] { "cèntim", "cèntims" }) },
+            { "MZN", Tuple.Create(new[] { "metical", "meticals" }, GENERIC_CENTS) },
+            { "NAD", Tuple.Create(GENERIC_DOLLARS, new[] { "cèntim", "cèntims" }) },
             { "NGN", Tuple.Create(new[] { "naira", "naires" }, new[] { "kobo", "kobos" }) },
             { "NPR", Tuple.Create(new[] { "rupia", "rupies" }, new[] { "paisa", "paises" }) },
-            { "NZD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), GENERIC_CENTS.ToTupleArray()) },
+            { "NZD", Tuple.Create(GENERIC_DOLLARS, GENERIC_CENTS) },
             { "OMR", Tuple.Create(new[] { "rial", "rials" }, new[] { "baisa", "baisa" }) },
-            { "PAB", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), new[] { "centésimo", "centésimos" }) },
+            { "PAB", Tuple.Create(GENERIC_DOLLARS, new[] { "centésimo", "centésimos" }) },
             { "PGK", Tuple.Create(new[] { "kina", "kina" }, new[] { "toea", "toea" }) },
-            { "PHP", Tuple.Create(new[] { "peso", "pesos" }, GENERIC_CENTS.ToTupleArray()) },
+            { "PHP", Tuple.Create(new[] { "peso", "pesos" }, GENERIC_CENTS) },
             { "PKR", Tuple.Create(new[] { "rupia", "rupies" }, new[] { "paisa", "paise" }) },
             { "PLZ", Tuple.Create(new[] { "zloty", "zlotys" }, new[] { "grosz", "groszy" }) },
             { "PYG", Tuple.Create(new[] { "guaraní", "guaranís" }, new[] { "cèntim", "cèntims" }) },
             { "QAR", Tuple.Create(new[] { "rial", "rials" }, new[] { "dírham", "dírhams" }) },
-            { "QTQ", Tuple.Create(new[] { "quetzal", "quetzals" }, GENERIC_CENTS.ToTupleArray()) },
+            { "QTQ", Tuple.Create(new[] { "quetzal", "quetzals" }, GENERIC_CENTS) },
             { "RSD", Tuple.Create(new[] { "dinar", "dinars" }, new[] { "para", "para" }) },
             { "RUR", Tuple.Create(new[] { "ruble", "rubles" }, new[] { "copec", "copecs" }) },
             { "RWF", Tuple.Create(new[] { "franc", "francs" }, new[] { "cèntim", "cèntims" }) },
             { "SAR", Tuple.Create(new[] { "riyal", "riyals" }, new[] { "hàl・lala", "hàl・lalat" }) },
-            { "SBD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), new[] { "cèntim", "cèntims" }) },
+            { "SBD", Tuple.Create(GENERIC_DOLLARS, new[] { "cèntim", "cèntims" }) },
             { "SCR", Tuple.Create(new[] { "rupia", "rupies" }, new[] { "cèntim", "cèntims" }) },
             { "SDG", Tuple.Create(new[] { "lliura", "lliures" }, new[] { "piastre", "piastres" }) },
-            { "SGD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), new[] { "cèntim", "cèntims" }) },
+            { "SGD", Tuple.Create(GENERIC_DOLLARS, new[] { "cèntim", "cèntims" }) },
             { "SHP", Tuple.Create(new[] { "lliura", "lliures" }, new[] { "penic", "penics" }) },
             { "SLL", Tuple.Create(new[] { "leonE", "leones" }, new[] { "cèntim", "cèntims" }) },
-            { "SRD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), new[] { "cèntim", "cèntims" }) },
+            { "SRD", Tuple.Create(GENERIC_DOLLARS, new[] { "cèntim", "cèntims" }) },
             { "SSP", Tuple.Create(new[] { "lliura", "lliures" }, new[] { "piastre", "piastres" }) },
             { "STD", Tuple.Create(new[] { "dobra", "dobrAs" }, new[] { "cèntim", "cèntims" }) },
-            { "SVC", Tuple.Create(new[] { "colón", "colons" }, GENERIC_CENTS.ToTupleArray()) },
+            { "SVC", Tuple.Create(new[] { "colón", "colons" }, GENERIC_CENTS) },
             { "SYP", Tuple.Create(new[] { "lliura", "lliures" }, new[] { "piastre", "piastres" }) },
             { "SZL", Tuple.Create(new[] { "lilangeni", "emalangeni" }, new[] { "cèntim", "cèntims" }) },
             { "TJS", Tuple.Create(new[] { "somoni", "somoni" }, new[] { "diram", "diram" }) },
             { "TMT", Tuple.Create(new[] { "manat", "manats" }, new[] { "teňňesi", "teňňesi" }) },
             { "TND", Tuple.Create(new[] { "dinar", "dinars" }, new[] { "mil・lim", "mil・limat" }) },
             { "TOP", Tuple.Create(new[] { "paanga", "paangas" }, new[] { "seniti", "seniti" }) },
-            { "TTD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), new[] { "cèntim", "cèntims" }) },
+            { "TTD", Tuple.Create(GENERIC_DOLLARS, new[] { "cèntim", "cèntims" }) },
             { "TWD", Tuple.Create(new[] { "nou dòlar", "nous dòlars" }, new[] { "fen", "fen" }) },
             { "TZS", Tuple.Create(new[] { "xíling", "xílings" }, new[] { "cèntim", "cèntims" }) },
             { "UGX", Tuple.Create(new[] { "xíling", "xílings" }, new[] { "cèntim", "cèntims" }) },
@@ -185,39 +185,41 @@ namespace Num2WordsNet
             { "VUV", Tuple.Create(new[] { "vatu", "vatus" }, new[] { "cèntim", "cèntims" }) },
             { "WST", Tuple.Create(new[] { "tala", "tala" }, new[] { "sene", "sene" }) },
             { "XAF", Tuple.Create(new[] { "franc CFA", "francs CFA" }, new[] { "cèntim", "cèntims" }) },
-            { "XCD", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), new[] { "cèntim", "cèntims" }) },
+            { "XCD", Tuple.Create(GENERIC_DOLLARS, new[] { "cèntim", "cèntims" }) },
             { "XOF", Tuple.Create(new[] { "franc CFA", "francs CFA" }, new[] { "cèntim", "cèntims" }) },
             { "XPF", Tuple.Create(new[] { "franc CFP", "francs CFP" }, new[] { "cèntim", "cèntims" }) },
             { "YER", Tuple.Create(new[] { "rial", "rials" }, new[] { "fils", "fils" }) },
             { "YUM", Tuple.Create(new[] { "dinar", "dinars" }, new[] { "para", "para" }) },
             { "ZMW", Tuple.Create(new[] { "kwacha", "kwacha" }, new[] { "ngwee", "ngwee" }) },
-            { "ZWL", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), new[] { "cèntim", "cèntims" }) },
-            { "ZWL", Tuple.Create(GENERIC_DOLLARS.ToTupleArray(), new[] { "cèntim", "cèntims" }) }
+            { "ZWL", Tuple.Create(GENERIC_DOLLARS, new[] { "cèntim", "cèntims" }) },
+            //{ "ZWL", Tuple.Create(GENERIC_DOLLARS, new[] { "cèntim", "cèntims" }) }
         };
 
         private static readonly string GIGA_SUFFIX = null;
         private static readonly string MEGA_SUFFIX = "ilió";
 
-        private string[]? high_numwords;
-        private string negword;
-        private string pointword;
-        private string errmsg_nonnum;
-        private string errmsg_floatord;
-        private string errmsg_negord;
-        private string errmsg_toobig;
-        private string gender_stem;
-        private List<string> exclude_title;
+        public string[]? high_numwords;
+        public string negword;
+        public string pointword;
+        public string errmsg_nonnum;
+        public string errmsg_floatord;
+        public string errmsg_negord;
+        public string errmsg_toobig;
+        public string gender_stem;
+        public List<string> exclude_title;
 
-        private List<Tuple<int, string>> mid_numwords;
-        private List<string> low_numwords;
-        private Dictionary<int, string> mid_num;
-        private Dictionary<int, string> low_num;
-        private Dictionary<decimal, string> ords;
-        private Dictionary<int, string> ords_2;
-        private Dictionary<int, string> ords_3;
+        public List<Tuple<int, string>> mid_numwords;
+        public string[] low_numwords;
+        public Dictionary<int, string> mid_num;
+        public Dictionary<int, string> low_num;
+        public Dictionary<decimal, string> ords;
+        public Dictionary<int, string> ords_2;
+        public Dictionary<int, string> ords_3;
 
-        public void Setup()
+        public override void Setup()
         {
+            base.Setup();
+
             var lows = new List<string> { "quadr", "tr", "b", "m" };
             high_numwords = GenHighNumwords(new string[] { }, new string[] { }, lows.ToArray())?.ToArray();
             negword = "menys ";
@@ -244,7 +246,7 @@ namespace Num2WordsNet
             new Tuple<int, string>(30, "trenta"),
         };
 
-            low_numwords = new List<string>
+            low_numwords = new string[]
         {
             "vint-i-nou", "vint-i-vuit", "vint-i-set", "vint-i-sis", "vint-i-cinc",
             "vint-i-quatre", "vint-i-tres", "vint-i-dos", "vint-i-un", "vint",
@@ -294,12 +296,12 @@ namespace Num2WordsNet
         }
 
         // 合并数字词
-        public Tuple<string, int> Merge(Tuple<string, int> curr, Tuple<string, int> next)
+        public override (string, decimal) Merge((string, decimal) curr, (string, decimal) next)
         {
             string ctext = curr.Item1;
-            int cnum = curr.Item2;
+            decimal cnum = curr.Item2;
             string ntext = next.Item1;
-            int nnum = next.Item2;
+            decimal nnum = next.Item2;
 
             if (cnum == 1)
             {
@@ -311,13 +313,13 @@ namespace Num2WordsNet
             if (nnum < cnum)
             {
                 if (cnum < 100)
-                    return new Tuple<string, int>($"{ctext}-{ntext}", cnum + nnum);
+                    return ($"{ctext}-{ntext}", cnum + nnum);
                 else if (nnum == 1)
-                    return new Tuple<string, int>($"{ctext} {ntext}", cnum + nnum);
+                    return ($"{ctext} {ntext}", cnum + nnum);
                 else if (cnum == 100)
-                    return new Tuple<string, int>($"{ctext} {ntext}", cnum + nnum);
+                    return ($"{ctext} {ntext}", cnum + nnum);
                 else
-                    return new Tuple<string, int>($"{ctext} {ntext}", cnum + nnum);
+                    return ($"{ctext} {ntext}", cnum + nnum);
             }
             else if ((nnum % 1000000 == 0) && cnum > 1)
             {
@@ -334,11 +336,11 @@ namespace Num2WordsNet
                 ntext = " " + ntext;
             }
 
-            return new Tuple<string, int>(ctext + ntext, cnum * nnum);
+            return (ctext + ntext, cnum * nnum);
         }
 
         // 转换为序数词
-        public string ToOrdinal(decimal value)
+        public override string ToOrdinal(decimal value)
         {
             VerifyOrdinal(value);
 
@@ -409,7 +411,7 @@ namespace Num2WordsNet
         }
 
         // 转换为序数数字
-        public string ToOrdinalNum(decimal value)
+        public override string ToOrdinalNum(decimal value)
         {
             VerifyOrdinal(value);
 
@@ -424,7 +426,7 @@ namespace Num2WordsNet
         }
 
         // 转换为货币表示
-        public string ToCurrency(double val, string currency = "EUR", bool cents = true,
+        public override string ToCurrency(decimal val, string currency = "EUR", bool cents = true,
                                  string separator = " amb", bool adjective = false)
         {
             string result = ToCurrency(val, currency, cents, separator, adjective);

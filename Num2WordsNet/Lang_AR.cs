@@ -99,21 +99,21 @@ namespace Num2WordsNet
             currency_subunit = new string[] { "هللة", "هللتان", "هللات", "هللة" };
         }
 
-        public void number_to_arabic(string arabic_prefix_text, string arabic_suffix_text)
+        public void NumberToArabic(string arabic_prefix_text, string arabic_suffix_text)
         {
             arabicPrefixText = arabic_prefix_text;
             arabicSuffixText = arabic_suffix_text;
-            extract_integer_and_decimal_parts();
+            ExtractIntegerAndDecimalParts();
         }
 
-        public void extract_integer_and_decimal_parts()
+        public void ExtractIntegerAndDecimalParts()
         {
             string[] splits = Regex.Split(number.ToString(), "\\.");
 
             integer_value = int.Parse(splits[0]);
             if (splits.Length > 1)
             {
-                _decimalValue = decimal_value(splits[1]).ToString();
+                _decimalValue = DecimalValue(splits[1]).ToString();
             }
             else
             {
@@ -121,7 +121,7 @@ namespace Num2WordsNet
             }
         }
 
-        public int decimal_value(string decimal_part)
+        public int DecimalValue(string decimal_part)
         {
             if (partPrecision != decimal_part.Length)
             {
@@ -170,7 +170,7 @@ namespace Num2WordsNet
             }
         }
 
-        public string process_arabic_group(int group_number, int group_level, decimal remaining_number)
+        public string ProcessArabicGroup(int group_number, int group_level, decimal remaining_number)
         {
             int tens = (int)(group_number % 100);
             int hundreds = (int)(group_number / 100);
@@ -248,12 +248,12 @@ namespace Num2WordsNet
             return ret_val;
         }
 
-        public decimal abs(decimal number)
+        public decimal Abs(decimal number)
         {
             return number >= 0 ? number : -number;
         }
 
-        public string to_str(decimal number)
+        public string ToStr(decimal number)
         {
             int integer = (int)number;
             if (integer == number)
@@ -266,8 +266,8 @@ namespace Num2WordsNet
 
         public string convert(decimal value)
         {
-            number = decimal.Parse(to_str(value));
-            number_to_arabic(arabicPrefixText, arabicSuffixText);
+            number = decimal.Parse(ToStr(value));
+            NumberToArabic(arabicPrefixText, arabicSuffixText);
             return convert_to_arabic();
         }
 
@@ -280,7 +280,7 @@ namespace Num2WordsNet
                 return "صفر";
             }
 
-            string decimal_string = process_arabic_group(int.Parse(_decimalValue), -1, 0);
+            string decimal_string = ProcessArabicGroup(int.Parse(_decimalValue), -1, 0);
             string ret_val = "";
             int group = 0;
 
@@ -289,7 +289,7 @@ namespace Num2WordsNet
                 int number_to_process = (int)(temp_number % 1000);
                 temp_number = (int)(temp_number / 1000);
 
-                string group_description = process_arabic_group(number_to_process, group, (decimal)Math.Floor(temp_number));
+                string group_description = ProcessArabicGroup(number_to_process, group, (decimal)Math.Floor(temp_number));
                 if (group_description != "")
                 {
                     if (group > 0)
@@ -446,7 +446,7 @@ namespace Num2WordsNet
             }
         }
 
-        public string to_currency(decimal value, string currency = "SR", string prefix = "", string suffix = "")
+        public string ToCurrency(decimal value, string currency = "SR", string prefix = "", string suffix = "")
         {
             set_currency_prefer(currency);
             isCurrencyNameFeminine = false;
@@ -456,7 +456,7 @@ namespace Num2WordsNet
             return convert(value: value);
         }
 
-        public string to_ordinal(decimal number, string prefix = "")
+        public string ToOrdinal(decimal number, string prefix = "")
         {
             if (number <= 19)
             {
@@ -474,21 +474,21 @@ namespace Num2WordsNet
             currency_unit = new string[] { "", "", "", "" };
             arabicPrefixText = prefix;
             arabicSuffixText = "";
-            return $"{convert(abs(number)).Trim()}";
+            return $"{convert(Abs(number)).Trim()}";
         }
 
-        public string to_year(decimal value)
+        public string ToYear(decimal value)
         {
             value = validate_number(value);
-            return to_cardinal(value);
+            return ToCardinal(value);
         }
 
-        public string to_ordinal_num(decimal value)
+        public string ToOrdinalNum(decimal value)
         {
-            return to_ordinal(value).Trim();
+            return ToOrdinal(value).Trim();
         }
 
-        public string to_cardinal(decimal number)
+        public string ToCardinal(decimal number)
         {
             isCurrencyNameFeminine = false;
             number = validate_number(number);
@@ -502,7 +502,7 @@ namespace Num2WordsNet
             currency_unit = new string[] { "", "", "", "" };
             arabicPrefixText = "";
             arabicSuffixText = "";
-            return minus + convert(value: abs(number)).Trim();
+            return minus + convert(value: Abs(number)).Trim();
         }
     }
 }

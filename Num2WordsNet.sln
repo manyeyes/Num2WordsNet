@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决�
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Num2WordsNet.Examples", "Num2WordsNet.Examples\Num2WordsNet.Examples.csproj", "{33815CFA-7EF2-4F33-A15A-26A50374C6A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +23,15 @@ Global
 		{875B2C8A-636C-4A59-BBDF-01829F6025B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{875B2C8A-636C-4A59-BBDF-01829F6025B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{875B2C8A-636C-4A59-BBDF-01829F6025B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33815CFA-7EF2-4F33-A15A-26A50374C6A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33815CFA-7EF2-4F33-A15A-26A50374C6A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33815CFA-7EF2-4F33-A15A-26A50374C6A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33815CFA-7EF2-4F33-A15A-26A50374C6A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6279C0A1-8A81-40B0-BA74-DA5BAFEE7A24}
 	EndGlobalSection
 EndGlobal

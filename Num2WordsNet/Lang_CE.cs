@@ -463,11 +463,11 @@ namespace Num2WordsNet
         }
         };
 
-        private List<Tuple<int, string>> mid_numwords = new List<Tuple<int, string>>();
-        private List<string> low_numwords = new List<string>();
-        private Dictionary<int, string> ords = new Dictionary<int, string>();
+        public List<Tuple<int, string>> mid_numwords = new List<Tuple<int, string>>();
+        public string[] low_numwords = new string[] { };
+        public Dictionary<int, string> ords = new Dictionary<int, string>();
 
-        public void Setup()
+        public override void Setup()
         {
             // 调用基类的Setup方法
             base.Setup();
@@ -478,7 +478,7 @@ namespace Num2WordsNet
 
             // 初始化空的数字词表和序数词映射
             mid_numwords = new List<Tuple<int, string>>();
-            low_numwords = new List<string>();
+            low_numwords = new string[] { };
             ords = new Dictionary<int, string>();
         }
 
@@ -486,9 +486,28 @@ namespace Num2WordsNet
         {
             return ToCardinal(number, clazz, "ORD");
         }
-
-        public string ToCardinal(int number, string clazz = "д", string caseForm = "abs")
+        public string ToCardinal(decimal d, string clazz = "д", string caseForm = "abs")
         {
+            int integerPart = (int)d;
+            if ((decimal)integerPart != d)
+            {
+                string entires = ToCardinal(integerPart, clazz, caseForm);
+
+                string floatStr = d.ToString("0.########", System.Globalization.CultureInfo.InvariantCulture);
+                string[] parts = floatStr.Split('.');
+
+                if (parts.Length > 1)
+                {
+                    string floatPart = parts[1].TrimEnd('0');
+                    if (!string.IsNullOrEmpty(floatPart))
+                    {
+                        string postfix = string.Join(" ", floatPart.Select(c => ToCardinal(int.Parse(c.ToString()), clazz, caseForm)));
+                        return entires + " " + DecimalPoint + " " + postfix;
+                    }
+                }
+                return entires;
+            }
+            int number= integerPart;
             if (number < 20)
             {
                 return MakeCase(number, caseForm, clazz);
@@ -577,27 +596,8 @@ namespace Num2WordsNet
             }
 
             return "NOT IMPLEMENTED";
-        }
 
-        public string ToCardinal(double number, string clazz = "д", string caseForm = "abs")
-        {
-            int integerPart = (int)number;
-            string entires = ToCardinal(integerPart, clazz, caseForm);
-
-            string floatStr = number.ToString("0.########", System.Globalization.CultureInfo.InvariantCulture);
-            string[] parts = floatStr.Split('.');
-
-            if (parts.Length > 1)
-            {
-                string floatPart = parts[1].TrimEnd('0');
-                if (!string.IsNullOrEmpty(floatPart))
-                {
-                    string postfix = string.Join(" ", floatPart.Select(c => ToCardinal(int.Parse(c.ToString()), clazz, caseForm)));
-                    return entires + " " + DecimalPoint + " " + postfix;
-                }
-            }
-
-            return entires;
+            
         }
 
         private string MoneyVerbose(int number, string currency, string caseForm)
