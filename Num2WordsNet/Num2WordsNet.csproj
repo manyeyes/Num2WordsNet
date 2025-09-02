@@ -1,9 +1,49 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
+		<PropertyGroup>
+				<TargetFrameworks>net45;net461;net472;net48;netstandard2.0;netstandard2.1;netcoreapp3.1;net6.0;net8.0;net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+				<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+				<!-- 平台最低版本要求 -->
+				<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.19041.0</SupportedOSPlatformVersion>
+				<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-android'))">21.0</SupportedOSPlatformVersion>
+				<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-ios'))">14.2</SupportedOSPlatformVersion>
+				<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-maccatalyst'))">15.0</SupportedOSPlatformVersion>
+				<!-- 统一配置 .NET 6+ 共有的属性 -->
+				<DefineConstants>$(DefineConstants);MODERN_DOTNET</DefineConstants>
+				<LangVersion>10</LangVersion>
+				<ImplicitUsings>enable</ImplicitUsings>
+				<Nullable>enable</Nullable>
+				<!-- info -->
+				<PackageId>ManySpeech.Num2WordsNet</PackageId>
+				<Version>0.1.0</Version>
+				<Authors>manyeyes contributors</Authors>
+				<Company>manyeyes contributors</Company>
+				<Copyright>Copyright © manyeyes contributors</Copyright>
+				<Summary>Num2WordsNet is a port of the Python project **num2words** to the C# programming language.</Summary>
+				<Description>
+						Num2WordsNet is a port of the Python project **num2words** to the C# programming language.
+						The num2words library converts numerical values into their word-based representations across multiple languages. For instance, the number "42" is transformed into "forty-two" (or its equivalent in other supported languages). A comprehensive list of supported languages is provided below..</Description>
+				<PackageTags>speech recognition asr paraformer sensevoice ai local privacy</PackageTags>
+				<PackageProjectUrl>https://github.com/manyeyes/Num2WordsNet</PackageProjectUrl>
+				<RepositoryUrl>https://github.com/manyeyes/Num2WordsNet</RepositoryUrl>
+				<IncludeSymbols>true</IncludeSymbols>
+				<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+				<Nullable>enable</Nullable>
+				<LangVersion>latest</LangVersion>
+				<PackageReadmeFile>App_Readme/README.EN.md</PackageReadmeFile>
+				<PackageLicenseFile>App_Readme/LICENSE</PackageLicenseFile>
+				<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+				<!--<PackageOutputPath>$(ArtifactsPath)\package</PackageOutputPath>-->
+				<Readme>App_Readme/README.md</Readme>
+		</PropertyGroup>
+		
+		<ItemGroup>
+				<None Include="..\README.md" Pack="true" PackagePath="App_Readme/" Visible="false" />
+				<None Include="..\README.EN.md" Pack="true" PackagePath="App_Readme/" Visible="false" />
+				<None Include="..\LICENSE" Pack="true" PackagePath="App_Readme/" Visible="false" />
+		</ItemGroup>
+		
+		<ItemGroup>
+				<PackageReference Include="System.ValueTuple" Version="4.3.0" Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'net45'"/>
+		</ItemGroup>
 </Project>
